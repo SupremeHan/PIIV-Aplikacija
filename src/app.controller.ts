@@ -9,7 +9,7 @@ export class AppController {
     return 'Hello mudafuka!';
   }
 
-  @Get('world')
+  @Get('w')
   getWorld(): string {
     return 'World modafaka!'
   }
