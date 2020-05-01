@@ -8,6 +8,8 @@ import { Ticket } from 'entities/ticket.entity';
 import { User } from 'entities/user.entity';
 import { AdminService } from './services/admin/admin.service';
 import { AdminController } from './controllers/api/admin.controller';
+import { MovieService } from './services/movie/movie.service';
+import { MovieController } from './controllers/api/movie.controller';
 
 @Module({
   imports: [
@@ -18,20 +20,25 @@ import { AdminController } from './controllers/api/admin.controller';
       username: DatabaseConfig.username,
       password: DatabaseConfig.password,
       database: DatabaseConfig.database,
-      entities: [
+      entities: [                         // Entities
           Admin,
           Movie,
           Ticket,
           User,
        ]
     }),
-    TypeOrmModule.forFeature([ 
-        Admin
+    TypeOrmModule.forFeature([   // Repository
+        Admin,
+        Movie,
      ])
   ],
   controllers: [ AppController,
-                 AdminController
+                 AdminController,
+                 MovieController
                ],
-  providers: [ AdminService ],
+  providers: [ 
+              AdminService,
+              MovieService, 
+            ],
 })
 export class AppModule {}
