@@ -10,6 +10,7 @@ import { AdminService } from './services/admin/admin.service';
 import { AdminController } from './controllers/api/admin.controller';
 import { MovieService } from './services/movie/movie.service';
 import { MovieController } from './controllers/api/movie.controller';
+import { AuthController } from './controllers/api/auth.controller';
 
 @Module({
   imports: [
@@ -34,7 +35,8 @@ import { MovieController } from './controllers/api/movie.controller';
   ],
   controllers: [ AppController,
                  AdminController,
-                 MovieController
+                 MovieController,
+                 AuthController
                ],
   providers: [ 
               AdminService,
