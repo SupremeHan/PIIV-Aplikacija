@@ -1,13 +1,13 @@
 export class JwtDataAdminDto {
     adminId: number;
     username: string;
-    ext: number;
+    exp: number;
 
     toPlainObject() {
         return {
             administratorId: this.adminId,
             username: this.username,
-            exp: this.ext
+            exp: this.exp
         }
     }
 }

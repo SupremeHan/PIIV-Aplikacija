@@ -1,6 +1,6 @@
 import { Controller, Get, Param, Body, Put, Post } from "@nestjs/common";
 import { AdminService } from "src/services/admin/admin.service";
-import { Admin } from "entities/admin.entity";
+import { Admin } from "src/entities/admin.entity";
 import { AddAdminDto } from "src/dto/admin/add.admin.dto";
 import { EditAdminDto } from "src/dto/admin/edit.admin.dto";
 import { ApiResponse } from "src/misc/api.response";

@@ -1,16 +1,19 @@
-import { Module } from '@nestjs/common';
+import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { AppController } from './controllers/app.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DatabaseConfig } from 'config/database.config';
-import { Admin } from 'entities/admin.entity';
-import { Movie } from 'entities/movie.entity';
-import { Ticket } from 'entities/ticket.entity';
-import { User } from 'entities/user.entity';
+import { Admin } from 'src/entities/admin.entity';
+import { Movie } from 'src/entities/movie.entity';
+import { Ticket } from 'src/entities/ticket.entity';
+import { User } from 'src/entities/user.entity';
 import { AdminService } from './services/admin/admin.service';
 import { AdminController } from './controllers/api/admin.controller';
 import { MovieService } from './services/movie/movie.service';
 import { MovieController } from './controllers/api/movie.controller';
 import { AuthController } from './controllers/api/auth.controller';
+import { AuthMiddleware } from './middlewares/auth.middleware';
+import { UserController } from './controllers/api/user.controller';
+import { UserService } from './services/user/user.service';
 
 @Module({
   imports: [
@@ -31,16 +34,29 @@ import { AuthController } from './controllers/api/auth.controller';
     TypeOrmModule.forFeature([   // Repository
         Admin,
         Movie,
+        User
      ])
   ],
   controllers: [ AppController,
                  AdminController,
                  MovieController,
-                 AuthController
+                 AuthController,
+                 UserController,
                ],
   providers: [ 
               AdminService,
-              MovieService, 
+              MovieService,
+              UserService, 
             ],
+  exports: [
+    AdminService
+  ],
 })
-export class AppModule {}
+export class AppModule implements NestModule{
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+    .apply(AuthMiddleware)
+    .exclude('auth/*')
+    .forRoutes('api/*');
+  }
+}

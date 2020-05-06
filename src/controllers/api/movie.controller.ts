@@ -1,6 +1,6 @@
 import { Controller } from "@nestjs/common";
 import { Crud } from "@nestjsx/crud";
-import { Movie } from "entities/movie.entity";
+import { Movie } from "src/entities/movie.entity";
 import { MovieService } from "src/services/movie/movie.service";
 
 @Controller('api/movie')

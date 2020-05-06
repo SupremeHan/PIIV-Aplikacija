@@ -35,9 +35,9 @@ export class AuthController {
         let sada = new Date();
         sada.setDate(sada.getDate() + 14);
         const istekTimestamp = sada.getTime() / 1000;
-        jwtData.ext = istekTimestamp;
+        jwtData.exp = istekTimestamp;
 
-        let token: string = jwt.sign(jwtData, jwtSecretKey);
+        let token: string = jwt.sign(jwtData.toPlainObject(), jwtSecretKey);
 
         const responseObj = new LoginInfoAdminDto(
             admin.adminId,
