@@ -14,6 +14,8 @@ import { AuthController } from './controllers/api/auth.controller';
 import { AuthMiddleware } from './middlewares/auth.middleware';
 import { UserController } from './controllers/api/user.controller';
 import { UserService } from './services/user/user.service';
+import { TicketController } from './controllers/api/ticket.controller';
+import { TicketService } from './services/ticket/ticket.service';
 
 @Module({
   imports: [
@@ -34,7 +36,8 @@ import { UserService } from './services/user/user.service';
     TypeOrmModule.forFeature([   // Repository
         Admin,
         Movie,
-        User
+        User,
+        Ticket
      ])
   ],
   controllers: [ AppController,
@@ -42,11 +45,13 @@ import { UserService } from './services/user/user.service';
                  MovieController,
                  AuthController,
                  UserController,
+                 TicketController,
                ],
   providers: [ 
               AdminService,
               MovieService,
               UserService, 
+              TicketService,
             ],
   exports: [
     AdminService
