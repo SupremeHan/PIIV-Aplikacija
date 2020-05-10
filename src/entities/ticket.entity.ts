@@ -31,6 +31,9 @@ export class Ticket {
   @Column("int", { name: "user_id", unsigned: true, default: () => "'0'" })
   userId: number;
 
+  @Column("int", { name: "screening_room", unsigned: true, default: () => "'0'" })
+  screening_room: number;
+ 
   @ManyToOne(() => Movie, (movie) => movie.tickets, {
     onDelete: "NO ACTION",
     onUpdate: "CASCADE",
