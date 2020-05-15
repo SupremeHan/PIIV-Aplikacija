@@ -32,7 +32,7 @@ export class Ticket {
   userId: number;
 
   @Column("int", { name: "screening_room", unsigned: true, default: () => "'0'" })
-  screening_room: number;
+  screeningRoom: number;
  
   @ManyToOne(() => Movie, (movie) => movie.tickets, {
     onDelete: "NO ACTION",

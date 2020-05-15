@@ -6,6 +6,7 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { Ticket } from "./ticket.entity";
+import { Photo } from "./photo.entity";
 
 @Index("uq_movie_title", ["title"], { unique: true })
 @Index("uq_movie_image_url", ["imageUrl"], { unique: true })
@@ -47,4 +48,8 @@ export class Movie {
 
   @OneToMany(() => Ticket, (ticket) => ticket.movie)
   tickets: Ticket[];
+
+  @OneToMany(() => Photo, (photo) => photo.movie)
+  photo: Photo[];
+
 }
