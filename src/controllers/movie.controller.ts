@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Post, UseInterceptors, UploadedFile, Req } from "@nestjs/common";
+import { Controller, Get, Param, Post, UseInterceptors, UploadedFile, Req, Body, Patch } from "@nestjs/common";
 import { Movie } from "src/entities/movie.entity";
 import { MovieService } from "src/services/movie/movie.service";
 import { ApiResponse } from "src/misc/api.response";
@@ -10,26 +10,58 @@ import { Photo } from "src/entities/photo.entity";
 import * as fileType from 'file-type';
 import * as fs from 'fs'; 
 import * as sharp from 'sharp';
+import { AddMovieDto } from "src/dto/movie/add.movie.dto";
+import { EditMovieDto } from "src/dto/movie/edit.movie.dto";
+import { Crud } from "@nestjsx/crud";
+import { SearchMovieDto } from "src/dto/movie/search.movie.dto";
 
 @Controller('api/movie')
+@Crud({
+    model: {
+        type: Movie
+    },
+    params: {
+        id: {
+            field: 'movieId',
+            type: 'number',
+            primary: true
+        }
+    }
+})
 export class MovieController {
-    constructor(public movieService: MovieService,
+    constructor(public service: MovieService,
                 public photoService: PhotoService) {}
 
     @Get()
     getAll(): Promise<Movie[]> {
-        return this.movieService.getAll();
+        return this.service.getAll();
     }
 
     @Get(':id')
     getById(@Param('id') movieId: number): Promise<Movie | ApiResponse> {
         return new Promise(async (resolve) => {
-            let movie = await this.movieService.getById(movieId);
+            let movie = await this.service.getById(movieId);
             if(movie == undefined) {
                 resolve(new ApiResponse("error", -5002));
             }
             resolve(movie);
         })
+    }
+    
+    
+    @Post('createMovie')
+    createMovie(@Body() data: AddMovieDto) {
+        return this.service.createFullMovie(data);
+    }
+
+    @Patch(':id')
+    edit(@Param('id') id:number, @Body() data: EditMovieDto): Promise<Movie | ApiResponse> {
+        return this.service.editMovie(id, data);
+    }
+
+    @Post('search')
+    async search(@Body() data: SearchMovieDto): Promise<Movie[]> {
+        return await this.service.search(data);
     }
 
     @Post(':id/uploadPhoto/')

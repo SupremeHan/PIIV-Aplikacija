@@ -6,45 +6,33 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { Movie } from "./movie.entity";
-import { User } from "./user.entity";
+import { ShowTime } from "./show-time.entity";
 
-@Index("fk_ticket_movie_id", ["movieId"], {})
-@Index("fk_ticket_user_id", ["userId"], {})
+@Index("fk_ticket_show_time_id", ["showTimeId"], {})
 @Entity("ticket", { schema: "aplikacija" })
 export class Ticket {
   @PrimaryGeneratedColumn({ type: "int", name: "ticket_id", unsigned: true })
   ticketId: number;
 
-  @Column("int", { name: "seats", unsigned: true, default: () => "'0'" })
+  @Column("int", { name: "seats", default: () => "'0'" })
   seats: number;
 
-  @Column("varchar", { name: "date", length: 32, default: () => "'0'" })
-  date: string;
+  @Column("varchar", { name: "forename", length: 64, default: () => "'0'" })
+  forename: string;
 
-  @Column("varchar", { name: "time", length: 32, default: () => "'0'" })
-  time: string;
+  @Column("varchar", { name: "surname", length: 64, default: () => "'0'" })
+  surname: string;
 
-  @Column("int", { name: "movie_id", unsigned: true, default: () => "'0'" })
-  movieId: number;
+  @Column("varchar", { name: "phone", length: 64, default: () => "'0'" })
+  phone: string;
 
-  @Column("int", { name: "user_id", unsigned: true, default: () => "'0'" })
-  userId: number;
+  @Column("int", { name: "show_time_id", unsigned: true, default: () => "'0'" })
+  showTimeId: number;
 
-  @Column("int", { name: "screening_room", unsigned: true, default: () => "'0'" })
-  screeningRoom: number;
- 
-  @ManyToOne(() => Movie, (movie) => movie.tickets, {
+  @ManyToOne(() => ShowTime, (showTime) => showTime.tickets, {
     onDelete: "NO ACTION",
     onUpdate: "CASCADE",
   })
-  @JoinColumn([{ name: "movie_id", referencedColumnName: "movieId" }])
-  movie: Movie;
-
-  @ManyToOne(() => User, (user) => user.tickets, {
-    onDelete: "NO ACTION",
-    onUpdate: "CASCADE",
-  })
-  @JoinColumn([{ name: "user_id", referencedColumnName: "userId" }])
-  user: User;
+  @JoinColumn([{ name: "show_time_id", referencedColumnName: "showTimeId" }])
+  showTime: ShowTime;
 }

@@ -6,6 +6,7 @@ import { AddAdminDto } from "src/dto/admin/add.admin.dto";
 import * as crypto from "crypto";
 import { EditAdminDto } from "src/dto/admin/edit.admin.dto";
 import { ApiResponse } from "src/misc/api.response";
+import { AdminToken } from "src/entities/admin-token.entity";
 
 
 @Injectable()
@@ -13,6 +14,9 @@ export class AdminService {
     constructor(
         @InjectRepository(Admin)
         private readonly admin: Repository<Admin>,
+
+        @InjectRepository(AdminToken)
+        private readonly adminToken: Repository<AdminToken>,
     ) {}
 
     getAll(): Promise<Admin[]> {
@@ -70,4 +74,46 @@ export class AdminService {
         admin.passwordHash = passwordHashString;
         return this.admin.save(admin);
     } 
+
+    async addToken(adminId: number, token: string, expiresAt: string) {
+        const adminToken  = new AdminToken();
+        adminToken.adminId = adminId;
+        adminToken.token = token;
+        adminToken.expiresAt = expiresAt;
+
+        return await this.adminToken.save(adminToken);
+    }
+
+    async getAdminToken(token: string): Promise<AdminToken> {
+        return await this.adminToken.findOne({
+            token: token,
+        });
+    }
+
+    async invalidateToken(token: string): Promise<AdminToken | ApiResponse> {
+        const adminToken = await this.adminToken.findOne({
+            token: token,
+        });
+        if(!adminToken) {
+            return new ApiResponse('error', -11001, 'No refresh token');
+       }
+
+       adminToken.isValid = 0;
+
+       await this.adminToken.save(adminToken);
+
+       return await this.getAdminToken(token);
+    }
+
+    async invalidateAdminTokens(adminId: number): Promise<(AdminToken | ApiResponse)[]> {
+        const adminTokens = await this.adminToken.find({
+            adminId: adminId,
+        });
+
+        const result = [];
+        for(const adminToken of adminTokens) {
+            result.push(this.invalidateToken(adminToken.token));
+        }
+        return result;
+    }
 }

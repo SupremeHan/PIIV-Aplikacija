@@ -6,6 +6,8 @@ import { Repository } from "typeorm";
 import { AddMovieDto } from "src/dto/movie/add.movie.dto";
 import { ApiResponse } from "src/misc/api.response";
 import { resolve } from "dns";
+import { EditMovieDto } from "src/dto/movie/edit.movie.dto";
+import { SearchMovieDto } from "src/dto/movie/search.movie.dto";
 
 @Injectable()
 export class MovieService extends TypeOrmCrudService<Movie> {
@@ -19,6 +21,18 @@ export class MovieService extends TypeOrmCrudService<Movie> {
 
     getById(id: number): Promise<Movie> {
         return this.movie.findOne(id);
+    }
+
+    async editMovie(id: number, data: EditMovieDto): Promise<Movie | ApiResponse> {
+        let movie: Movie = await this.movie.findOne(id);
+
+        movie.title = data.title;
+        movie.genre = data.genre;
+        movie.duration = data.duration;
+        movie.director = data.director;
+        movie.description = data.description;
+
+        return this.movie.save(movie);
     }
 
     async createFullMovie(data: AddMovieDto): Promise<Movie | ApiResponse> {
@@ -37,5 +51,17 @@ export class MovieService extends TypeOrmCrudService<Movie> {
                 resolve(response);
             })
         })
+    }
+
+    async search(data: SearchMovieDto): Promise<Movie[]> {
+        const builder = await this.movie.createQueryBuilder("movie");
+
+        builder.where('movie.genres = :genres', { movieId: data.genres });
+        if(data.keywords && data.keywords.length > 0) {
+            builder.andWhere(`movie.genre LIKE :kw`, {kw: '%' + data.keywords.trim() + '%'});
+        }
+
+        let items = await builder.getMany();
+        return items;
     }
 }

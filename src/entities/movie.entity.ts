@@ -5,11 +5,9 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { Ticket } from "./ticket.entity";
-import { Photo } from "./photo.entity";
+import { ShowTime } from "./show-time.entity";
 
 @Index("uq_movie_title", ["title"], { unique: true })
-@Index("uq_movie_image_url", ["imageUrl"], { unique: true })
 @Entity("movie", { schema: "aplikacija" })
 export class Movie {
   @PrimaryGeneratedColumn({ type: "int", name: "movie_id", unsigned: true })
@@ -29,27 +27,18 @@ export class Movie {
   @Column("int", { name: "duration", default: () => "'0'" })
   duration: number;
 
-  @Column("varchar", {
-    name: "image_url",
-    unique: true,
-    length: 128,
-    default: () => "'0'",
-  })
+  @Column("varchar", { name: "image_url", length: 128, default: () => "'0'" })
   imageUrl: string;
 
   @Column("varchar", { name: "director", length: 64, default: () => "'0'" })
   director: string;
 
-  @Column("text", { name: "description" })
-  description: string;
+  @Column("mediumtext", { name: "description", nullable: true })
+  description: string | null;
 
   @Column("tinyint", { name: "rating", default: () => "'0'" })
   rating: number;
 
-  @OneToMany(() => Ticket, (ticket) => ticket.movie)
-  tickets: Ticket[];
-
-  @OneToMany(() => Photo, (photo) => photo.movie)
-  photo: Photo[];
-
+  @OneToMany(() => ShowTime, (showTime) => showTime.movie)
+  showTimes: ShowTime[];
 }

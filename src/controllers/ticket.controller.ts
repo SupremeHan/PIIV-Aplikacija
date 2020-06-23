@@ -1,10 +1,11 @@
-import { Controller, Get, Param } from "@nestjs/common";
+import { Controller, Get, Param, Body, Post } from "@nestjs/common";
 import { TicketService } from "src/services/ticket/ticket.service";
 import { Ticket } from "src/entities/ticket.entity";
 import { ApiResponse } from "src/misc/api.response";
 import { async } from "rxjs/internal/scheduler/async";
 import { resolve } from "dns";
 import { Crud } from "@nestjsx/crud";
+import { AddTicketDto } from "src/dto/ticket/add.ticket.dto";
 
 @Controller('api/ticket')
 @Crud({
@@ -21,7 +22,7 @@ import { Crud } from "@nestjsx/crud";
     // Nije jos resen problem, ne prikazuje usera
     query: {
         join: {
-            user: {
+            showTime: {
                 eager: true
             }
         }
@@ -47,4 +48,8 @@ export class TicketController {
         }) 
     }
 
+    @Post('createTicket')
+    createTicket(@Body() data: AddTicketDto) {
+        return this.ticketService.createTicket(data);
+    }
 }
