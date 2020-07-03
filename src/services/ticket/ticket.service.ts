@@ -7,6 +7,7 @@ import { AddTicketDto } from "src/dto/ticket/add.ticket.dto";
 import { ApiResponse } from "src/misc/api.response";
 import { Movie } from "src/entities/movie.entity";
 import { ShowTime } from "src/entities/show-time.entity";
+import { AddShowtimeDto } from "src/dto/ticket/add.showtime.dto";
 
 @Injectable()
 export class TicketService extends TypeOrmCrudService<Ticket>{
@@ -42,5 +43,18 @@ export class TicketService extends TypeOrmCrudService<Ticket>{
         let savedTicket = await this.ticket.save(newTicket);
 
         return await this.ticket.findOne(savedTicket.ticketId);
+    }
+
+    async createShowTime(data: AddShowtimeDto): Promise<ShowTime | ApiResponse> {
+        let newShowtime: ShowTime = new ShowTime();
+        newShowtime.screeningRoom = data.screeningRoom;
+        newShowtime.time = data.time;
+        newShowtime.dateAt = data.dateAt;
+        newShowtime.dateTo = data.dateTo;
+        newShowtime.movieId = data.movieId;
+
+        let saved = await this.showTime.save(newShowtime);
+        
+        return await this.showTime.findOne(saved.showTimeId);
     }
 }
