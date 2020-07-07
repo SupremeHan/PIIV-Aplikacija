@@ -6,6 +6,7 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { ShowTime } from "./show-time.entity";
+import { Photo } from "./photo.entity";
 
 @Index("uq_movie_title", ["title"], { unique: true })
 @Entity("movie", { schema: "aplikacija" })
@@ -41,4 +42,5 @@ export class Movie {
 
   @OneToMany(() => ShowTime, (showTime) => showTime.movie)
   showTimes: ShowTime[];
+  
 }

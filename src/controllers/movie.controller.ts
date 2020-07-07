@@ -26,7 +26,7 @@ import { SearchMovieDto } from "src/dto/movie/search.movie.dto";
             type: 'number',
             primary: true
         }
-    }
+    },
 })
 export class MovieController {
     constructor(public service: MovieService,
@@ -60,7 +60,7 @@ export class MovieController {
     }
 
     @Post('search')
-    async search(@Body() data: SearchMovieDto): Promise<Movie[]> {
+    async search(@Body() data: SearchMovieDto): Promise<Movie[] | ApiResponse> {
         return await this.service.search(data);
     }
 

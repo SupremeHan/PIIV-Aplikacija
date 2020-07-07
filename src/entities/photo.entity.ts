@@ -1,4 +1,5 @@
 import { Column, Entity, Index, PrimaryGeneratedColumn } from "typeorm";
+import { Movie } from "./movie.entity";
 
 @Index("uq_photo_image_path", ["imagePath"], { unique: true })
 @Index("fk_photo_movie_id", ["movieId"], {})
@@ -17,4 +18,6 @@ export class Photo {
     default: () => "'0'",
   })
   imagePath: string;
+
+  
 }

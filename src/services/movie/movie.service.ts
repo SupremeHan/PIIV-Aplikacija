@@ -8,6 +8,7 @@ import { ApiResponse } from "src/misc/api.response";
 import { resolve } from "dns";
 import { EditMovieDto } from "src/dto/movie/edit.movie.dto";
 import { SearchMovieDto } from "src/dto/movie/search.movie.dto";
+import { Photo } from 'src/entities/photo.entity';
 
 @Injectable()
 export class MovieService extends TypeOrmCrudService<Movie> {
@@ -15,8 +16,17 @@ export class MovieService extends TypeOrmCrudService<Movie> {
         super(movie);
     }
 
-    getAll(): Promise<Movie[]> {
-        return this.movie.find();
+    async getAll(): Promise<Movie[]> {
+        let x = await this.movie.find();
+        const builder = this.photo.createQueryBuilder("photo");
+
+        x.forEach(element => {
+            console.log(element);
+            
+
+            builder.where('movie.genre = :genre', {genre: data.genre});
+        });
+        return x;
     }
 
     getById(id: number): Promise<Movie> {
@@ -53,15 +63,17 @@ export class MovieService extends TypeOrmCrudService<Movie> {
         })
     }
 
-    async search(data: SearchMovieDto): Promise<Movie[]> {
+    async search(data: SearchMovieDto): Promise<Movie[] | ApiResponse> {
         const builder = await this.movie.createQueryBuilder("movie");
 
-        builder.where('movie.genres = :genres', { movieId: data.genres });
-        if(data.keywords && data.keywords.length > 0) {
-            builder.andWhere(`movie.genre LIKE :kw`, {kw: '%' + data.keywords.trim() + '%'});
+        builder.where('movie.genre = :genre', {genre: data.genre});
+        
+        let articles = await builder.getMany();
+
+        if (articles.length === 0) {
+            return new ApiResponse("ok", 0, "No articles found for these search parameters.");
         }
 
-        let items = await builder.getMany();
-        return items;
+        return articles;
     }
 }

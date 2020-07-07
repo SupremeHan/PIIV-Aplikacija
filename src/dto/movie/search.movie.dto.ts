@@ -1,4 +1,3 @@
 export class SearchMovieDto {
-    keywords: string;
-    genres: string;
+    genre: string;
 }
