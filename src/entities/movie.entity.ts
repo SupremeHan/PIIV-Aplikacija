@@ -42,5 +42,8 @@ export class Movie {
 
   @OneToMany(() => ShowTime, (showTime) => showTime.movie)
   showTimes: ShowTime[];
+
+  @OneToMany(() => Photo, (photo) => photo.movie)
+  photo: Photo[];
   
 }

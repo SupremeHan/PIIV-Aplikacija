@@ -407,16 +407,6 @@
 					]
 				}
 			],
-			"auth": {
-				"type": "bearer",
-				"bearer": [
-					{
-						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbmlzdHJhdG9ySWQiOjMsInVzZXJuYW1lIjoiYWRtaW4iLCJleHAiOjE1ODk4MjM2NDUuMzM5LCJpYXQiOjE1ODg2MTQwNDV9.ny_ll3OuZ04Mfx5m87C2y-bRkp--8iJobwWAWpFa5hg",
-						"type": "string"
-					}
-				]
-			},
 			"event": [
 				{
 					"listen": "prerequest",
@@ -457,7 +447,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"username\":\"admin\",\n\t\"password\":\"admin\"\n}"
+							"raw": "{\n\t\"username\":\"admin2\",\n\t\"password\":\"admin2\"\n}",
+							"options": {
+								"raw": {}
+							}
 						},
 						"url": {
 							"raw": "http://localhost:3003/auth/login/",
@@ -536,161 +529,26 @@
 							"body": "{\n    \"adminId\": 3,\n    \"username\": \"admin\",\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbmlzdHJhdG9ySWQiOjMsInVzZXJuYW1lIjoiYWRtaW4iLCJleHAiOjE1OTAzNDUxMTcuODEyLCJpYXQiOjE1ODkxMzU1MTd9.03IFJwaNOaxLgU1TW6uy5KQYzKFats0PPMw5_ge3lAY\"\n}"
 						}
 					]
-				}
-			],
-			"protocolProfileBehavior": {}
-		},
-		{
-			"name": "user",
-			"item": [
+				},
 				{
-					"name": "Get all users",
+					"name": "Refresh admin token",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbmlzdHJhdG9ySWQiOjMsInVzZXJuYW1lIjoiYWRtaW4iLCJleHAiOjE1ODk4MjM2NDUuMzM5LCJpYXQiOjE1ODg2MTQwNDV9.ny_ll3OuZ04Mfx5m87C2y-bRkp--8iJobwWAWpFa5hg",
-									"type": "string"
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbmlzdHJhdG9ySWQiOjMsInVzZXJuYW1lIjoiYWRtaW4iLCJleHAiOjE1OTUyNTk0MTUuMTAyLCJpYXQiOjE1OTI1ODEwMTV9.-T73m8blDq2CDiXtYCqrEzhxqQ13XxTBI3Xrzaoq1RU\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
 								}
-							]
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							},
-							{
-								"key": "Authorization",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbmlzdHJhdG9ySWQiOjMsInVzZXJuYW1lIjoiYWRtaW4iLCJleHAiOjE1ODk4MjM2NDUuMzM5LCJpYXQiOjE1ODg2MTQwNDV9.ny_ll3OuZ04Mfx5m87C2y-bRkp--8iJobwWAWpFa5hg",
-								"type": "text"
 							}
-						],
+						},
 						"url": {
-							"raw": "http://localhost:3003/api/user/",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3003",
-							"path": [
-								"api",
-								"user",
-								""
-							]
+							"raw": ""
 						}
 					},
 					"response": []
-				},
-				{
-					"name": "Get a single user",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbmlzdHJhdG9ySWQiOjMsInVzZXJuYW1lIjoiYWRtaW4iLCJleHAiOjE1ODk4MjM2NDUuMzM5LCJpYXQiOjE1ODg2MTQwNDV9.ny_ll3OuZ04Mfx5m87C2y-bRkp--8iJobwWAWpFa5hg",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:3003/api/user/1?",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3003",
-							"path": [
-								"api",
-								"user",
-								"1"
-							],
-							"query": [
-								{
-									"key": "",
-									"value": null
-								}
-							]
-						}
-					},
-					"response": [
-						{
-							"name": "Get a single user",
-							"originalRequest": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "http://localhost:3003/api/user/1?",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3003",
-									"path": [
-										"api",
-										"user",
-										"1"
-									],
-									"query": [
-										{
-											"key": "",
-											"value": null
-										}
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "X-Powered-By",
-									"value": "Express"
-								},
-								{
-									"key": "Content-Type",
-									"value": "application/json; charset=utf-8"
-								},
-								{
-									"key": "Content-Length",
-									"value": "155"
-								},
-								{
-									"key": "ETag",
-									"value": "W/\"9b-KIsdRkQt0DlaxW6Q63COmEUemJs\""
-								},
-								{
-									"key": "Date",
-									"value": "Wed, 06 May 2020 18:55:47 GMT"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"userId\": 1,\n    \"email\": \"user@gmail.com\",\n    \"passwordHash\": \"lkasfjjfjeflkasefse9\",\n    \"forname\": \"User\",\n    \"surname\": \"Test\",\n    \"phoneNumber\": \"3434322123\",\n    \"adress\": \"Nowhere\"\n}"
-						}
-					]
 				}
 			],
 			"protocolProfileBehavior": {}
@@ -714,7 +572,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": ""
+							"raw": "",
+							"options": {
+								"raw": {}
+							}
 						},
 						"url": {
 							"raw": "http://localhost:3003/api/movie/",
@@ -734,9 +595,6 @@
 				},
 				{
 					"name": "Upload movie photo",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -748,7 +606,7 @@
 								}
 							]
 						},
-						"method": "GET",
+						"method": "POST",
 						"header": [
 							{
 								"key": "",
@@ -762,12 +620,12 @@
 								{
 									"key": "photo",
 									"type": "file",
-									"src": "/C:/Users/Nikola/Documents/Figma/avengers_poster.jpg"
+									"src": "/C:/Users/Nikola/Documents/Figma/joker_poster.jpg"
 								}
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3003/api/movie/:1/uploadPhoto",
+							"raw": "http://localhost:3003/api/movie/:4/uploadPhoto",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -776,30 +634,367 @@
 							"path": [
 								"api",
 								"movie",
-								":1",
+								":4",
 								"uploadPhoto"
 							],
 							"variable": [
 								{
-									"key": "1",
+									"key": "4",
 									"value": ""
 								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Upload movie photo successful",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "photo",
+											"type": "file",
+											"src": "/C:/Users/Nikola/Desktop/filmovi slikice/Rio French Poster.jpg"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:3003/api/movie/3/uploadPhoto",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3003",
+									"path": [
+										"api",
+										"movie",
+										"3",
+										"uploadPhoto"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "80"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"50-Mp3BfEdJ+unO22ZNlcCTi0RycOE\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 08 Jul 2020 23:20:29 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"movieId\": 3,\n    \"imagePath\": \"202079-3117694498-rio-french-poster.jpg\",\n    \"photoId\": 21\n}"
+						}
+					]
+				},
+				{
+					"name": "Add movie ",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\": \"Joker\",\n\t\"genre\": \"Action\",\n\t\"duration\": 120,\n\t\"director\": \"Peter Marks\",\n\t\"description\": \"An action packed movie by DC studio\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3003/api/movie/createMovie",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3003",
+							"path": [
+								"api",
+								"movie",
+								"createMovie"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Add movie successful example",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"title\": \"Joker\",\n\t\"genre\": \"Action\",\n\t\"duration\": 120,\n\t\"director\": \"Peter Marks\",\n\t\"description\": \"An action packed movie by DC studio\"\n}"
+								},
+								"url": {
+									"raw": "http://localhost:3003/api/movie/createMovie",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3003",
+									"path": [
+										"api",
+										"movie",
+										"createMovie"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "164"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"a4-y8NbNPYaEltNC2Ht7p+OTzM5Bj8\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 13 Jun 2020 18:54:54 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"title\": \"Joker\",\n    \"genre\": \"Action\",\n    \"duration\": 120,\n    \"director\": \"Peter Marks\",\n    \"description\": \"An action packed movie by DC studio\",\n    \"movieId\": 4,\n    \"imageUrl\": \"0\",\n    \"rating\": 0\n}"
+						}
+					]
+				},
+				{
+					"name": "Edit movie information",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"title\": \"Joker 3\"\r\n}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3003/api/movie/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3003",
+							"path": [
+								"api",
+								"movie",
+								"4"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Edit movie information succesfull",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\"title\": \"Joker 2\",\r\n\t\"genre\": \"Action\",\r\n\t\"duration\": 120,\r\n\t\"director\": \"Peter Marks\",\r\n\t\"description\": \"An action packed movie by DC studio\"\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:3003/api/movie/4",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3003",
+									"path": [
+										"api",
+										"movie",
+										"4"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "166"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"a6-P5F3VvMTXu0GgaaUe3ypZiwVWFM\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 16 Jun 2020 22:11:20 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"movieId\": 4,\n    \"title\": \"Joker 2\",\n    \"genre\": \"Action\",\n    \"duration\": 120,\n    \"imageUrl\": \"0\",\n    \"director\": \"Peter Marks\",\n    \"description\": \"An action packed movie by DC studio\",\n    \"rating\": 0\n}"
+						}
+					]
+				},
+				{
+					"name": "Get a single movie",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3003/api/movie/?filter=movieId||$eq||1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3003",
+							"path": [
+								"api",
+								"movie",
+								""
+							],
+							"query": [
+								{
+									"key": "filter",
+									"value": "movieId||$eq||1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search movie",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"keywords\":\"Aciton\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3003/api/movie/search",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3003",
+							"path": [
+								"api",
+								"movie",
+								"search"
 							]
 						}
 					},
 					"response": []
 				}
 			],
-			"auth": {
-				"type": "bearer",
-				"bearer": [
-					{
-						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbmlzdHJhdG9ySWQiOjMsInVzZXJuYW1lIjoiYWRtaW4iLCJleHAiOjE1ODk4MjM2NDUuMzM5LCJpYXQiOjE1ODg2MTQwNDV9.ny_ll3OuZ04Mfx5m87C2y-bRkp--8iJobwWAWpFa5hg",
-						"type": "string"
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "d15abaa2-84de-4c8d-8c6a-8be6429e251c",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
 					}
-				]
-			},
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "07ce4d3f-50cc-4c80-a1e1-97782227b69b",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
 			"protocolProfileBehavior": {}
 		},
 		{
@@ -894,11 +1089,146 @@
 							"body": "[\n    {\n        \"ticketId\": 1,\n        \"seats\": 2,\n        \"date\": \"05-03-2020\",\n        \"time\": \"17:30\",\n        \"movieId\": 1,\n        \"userId\": 1,\n        \"screening_room\": 1\n    },\n    {\n        \"ticketId\": 2,\n        \"seats\": 4,\n        \"date\": \"04-03-2020\",\n        \"time\": \"19:00\",\n        \"movieId\": 2,\n        \"userId\": 2,\n        \"screening_room\": 2\n    }\n]"
 						}
 					]
+				},
+				{
+					"name": "Add ticket",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"seats\":4,\n\t\"forename\":\"Mare\",\n\t\"surname\":\"Care\",\n\t\"phone\":\"064-111-322\",\n\t\"showTimeId\":1\n}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3003/api/ticket/createTicket",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3003",
+							"path": [
+								"api",
+								"ticket",
+								"createTicket"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Add ticket successful",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"seats\":4,\n\t\"forename\":\"Mare\",\n\t\"surname\":\"Care\",\n\t\"phone\":\"064-111-322\",\n\t\"showTimeId\":1\n}"
+								},
+								"url": {
+									"raw": "http://localhost:3003/api/ticket/createTicket",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3003",
+									"path": [
+										"api",
+										"ticket",
+										"createTicket"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "96"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"60-12Dpa+L44sxW5zaX4kCaBIMVGWU\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 23 Jun 2020 21:27:16 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"ticketId\": 4,\n    \"seats\": 4,\n    \"forename\": \"Mare\",\n    \"surname\": \"Care\",\n    \"phone\": \"064-111-322\",\n    \"showTimeId\": 1\n}"
+						}
+					]
+				},
+				{
+					"name": "Get all times",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add showtime",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3003/api/showtime/createShowtime",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3003",
+							"path": [
+								"api",
+								"showtime",
+								"createShowtime"
+							]
+						}
+					},
+					"response": []
 				}
 			],
-			"auth": {
-				"type": "noauth"
-			},
 			"event": [
 				{
 					"listen": "prerequest",
@@ -929,7 +1259,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "das98dasdjs0djasd9f0d8ds09fdsf8sd09fjdsfisdjfdsfsd09fusdfsd0fsdjdsjkgj9wgrfdg8fgdjfg0df",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbmlzdHJhdG9ySWQiOjUsInVzZXJuYW1lIjoiYWRtaW4yIiwiZXhwIjoxNTk2ODk2NTY0LjU3MywiaWF0IjoxNTk0MjE4MTY0fQ.CuWK3wUtco-beO5KXtcTZHWhVdyD8zsYSfhMv8C5yRg",
 				"type": "string"
 			}
 		]

@@ -1,4 +1,4 @@
-import { Column, Entity, Index, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, Index, PrimaryGeneratedColumn, JoinColumn } from "typeorm";
 import { Movie } from "./movie.entity";
 
 @Index("uq_photo_image_path", ["imagePath"], { unique: true })
@@ -19,5 +19,6 @@ export class Photo {
   })
   imagePath: string;
 
-  
+  @JoinColumn([{ name: "movie_id", referencedColumnName: "movieId" }])
+  movie: Movie;
 }

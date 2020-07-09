@@ -10,6 +10,10 @@ export class PhotoService extends TypeOrmCrudService<Photo>{
         super(photo);
     }
 
+    getAll(): Promise<Photo[]> {
+        return this.photo.find();
+    }
+
     add(newPhoto: Photo): Promise<Photo> {
         return this.photo.save(newPhoto);
     }

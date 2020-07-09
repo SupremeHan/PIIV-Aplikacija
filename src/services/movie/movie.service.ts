@@ -12,25 +12,41 @@ import { Photo } from 'src/entities/photo.entity';
 
 @Injectable()
 export class MovieService extends TypeOrmCrudService<Movie> {
-    constructor(@InjectRepository(Movie) private readonly movie: Repository<Movie>) {
+    constructor(@InjectRepository(Movie) private readonly movie: Repository<Movie>,
+                @InjectRepository(Photo) private readonly photo: Repository<Photo>) {
         super(movie);
     }
 
     async getAll(): Promise<Movie[]> {
         let x = await this.movie.find();
-        const builder = this.photo.createQueryBuilder("photo");
-
+        
+        let slike = await this.photo.find();
         x.forEach(element => {
-            console.log(element);
             
-
-            builder.where('movie.genre = :genre', {genre: data.genre});
+            slike.forEach(slika => {
+                if(slika.movieId == element.movieId){
+                    element.imageUrl = slika.imagePath;
+                }
+            })
+            
         });
+        
         return x;
     }
 
-    getById(id: number): Promise<Movie> {
-        return this.movie.findOne(id);
+    async getById(id: number): Promise<Movie | ApiResponse> {
+        let x = await this.movie.findOne(id);
+        let slika = await this.photo.find();
+        
+        slika.forEach(slika => {
+            if(x.movieId == slika.movieId) {
+                x.imageUrl = slika.imagePath;
+            }    
+        })
+        
+      
+        
+        return x;
     }
 
     async editMovie(id: number, data: EditMovieDto): Promise<Movie | ApiResponse> {
